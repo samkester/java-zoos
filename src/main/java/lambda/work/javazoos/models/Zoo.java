@@ -16,11 +16,11 @@ public class Zoo extends Auditable{
     private String zooname;
 
     @OneToMany(mappedBy = "zoo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = {"zoo", "zoos"})
+    @JsonIgnoreProperties(value = {"zoo", "zoos"}, allowSetters = true)
     private Set<Telephone> phones = new HashSet<>();
 
     @OneToMany(mappedBy = "zoo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = {"zoo", "zoos"})
+    @JsonIgnoreProperties(value = {"zoo", "zoos"}, allowSetters = true)
     private Set<ZooAnimal> animals = new HashSet<>();
 
     public Zoo() {

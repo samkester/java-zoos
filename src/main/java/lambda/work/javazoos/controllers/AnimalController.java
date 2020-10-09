@@ -1,6 +1,7 @@
 package lambda.work.javazoos.controllers;
 
 import lambda.work.javazoos.services.AnimalService;
+import lambda.work.javazoos.views.AnimalCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class AnimalController {
     private AnimalService animalService;
 
     @GetMapping(value = "/count", produces = {"application/json"})
-    public ResponseEntity<?> getAnimalCount()
+    public ResponseEntity<?> getAnimalsByCount()
     {
-        List animals = animalService.getAll();
-        return new ResponseEntity<>(animals.size(), HttpStatus.OK);
+        List<AnimalCount> animalCounts = animalService.getAnimalsByCount();
+        return new ResponseEntity<>(animalCounts, HttpStatus.OK);
     }
 }
