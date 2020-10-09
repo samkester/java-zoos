@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="zooanimals")
 @IdClass(ZooAnimalID.class)
-public class ZooAnimal {
+public class ZooAnimal extends Auditable {
     @Id
     @ManyToOne
     @JoinColumn(name = "zooid")

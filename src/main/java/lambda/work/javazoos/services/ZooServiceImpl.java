@@ -42,7 +42,7 @@ public class ZooServiceImpl implements ZooService{
     public Zoo saveZoo(Zoo zoo) {
         Zoo newZoo = new Zoo();
         // handle simple fields
-        newZoo.setName(zoo.getName());
+        newZoo.setZooname(zoo.getZooname());
 
         // handle ID
         if(zoo.getZooid() != 0)
@@ -82,7 +82,7 @@ public class ZooServiceImpl implements ZooService{
                 .orElseThrow(() -> new EntityNotFoundException("Could not find zoo with id '" + zoo.getZooid() + "'"));;
 
         // handle simple fields
-        newZoo.setName(zoo.getName());
+        newZoo.setZooname(zoo.getZooname());
 
         // handle phones
         if(zoo.getPhones().size() > 0) {

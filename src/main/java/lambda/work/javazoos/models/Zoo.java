@@ -13,7 +13,7 @@ public class Zoo extends Auditable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long zooid;
 
-    private String name;
+    private String zooname;
 
     @OneToMany(mappedBy = "zoo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "zoo")
@@ -26,9 +26,9 @@ public class Zoo extends Auditable{
     public Zoo() {
     }
 
-    public Zoo(long zooid, String name) {
+    public Zoo(long zooid, String zooname) {
         this.zooid = zooid;
-        this.name = name;
+        this.zooname = zooname;
     }
 
     public long getZooid() {
@@ -39,12 +39,12 @@ public class Zoo extends Auditable{
         this.zooid = zooid;
     }
 
-    public String getName() {
-        return name;
+    public String getZooname() {
+        return zooname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setZooname(String name) {
+        this.zooname = name;
     }
 
     public Set<Telephone> getPhones() {
