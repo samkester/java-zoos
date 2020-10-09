@@ -1,11 +1,9 @@
 package lambda.work.javazoos.services;
 
-import lambda.work.javazoos.models.Animal;
-import lambda.work.javazoos.models.Telephone;
-import lambda.work.javazoos.models.Zoo;
-import lambda.work.javazoos.models.ZooAnimal;
+import lambda.work.javazoos.models.*;
 import lambda.work.javazoos.repositories.AnimalRepository;
 import lambda.work.javazoos.repositories.TelephoneRepository;
+import lambda.work.javazoos.repositories.ZooAnimalRepository;
 import lambda.work.javazoos.repositories.ZooRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ public class ZooServiceImpl implements ZooService{
     @Autowired
     private AnimalRepository animalRepository;
     @Autowired
-    private TelephoneRepository telephoneRepository;
+    private ZooAnimalRepository zooAnimalRepository;
 
     @Override
     public List<Zoo> getAll() {
@@ -52,6 +50,7 @@ public class ZooServiceImpl implements ZooService{
         }
 
         // handle phones
+        //newZoo.getPhones().clear();
         for(Telephone phone : zoo.getPhones())
         {
             Telephone newPhone = new Telephone(phone.getPhonenumber(), phone.getPhonetype());
@@ -60,11 +59,16 @@ public class ZooServiceImpl implements ZooService{
         }
 
         // handle animals
+        //newZoo.getAnimals().clear();
         for(ZooAnimal zooAnimal : zoo.getAnimals())
         {
+            // find the existing ZooAnimal map, if any; otherwise make a new one
+            ZooAnimal newZooAnimal = zooAnimalRepository.findById(
+                    new ZooAnimalID(zooAnimal.getAnimal().getAnimalid(), zoo.getZooid()))
+                    .orElse(new ZooAnimal());
+
             Animal newAnimal = animalRepository.findById(zooAnimal.getAnimal().getAnimalid())
                     .orElseThrow(() -> new EntityNotFoundException("Could not find animal with id '" + zoo.getZooid() + "'"));
-            ZooAnimal newZooAnimal = new ZooAnimal();
 
             newZooAnimal.setIncomingzoo(zooAnimal.getIncomingzoo());
             newZooAnimal.setAnimal(newAnimal);
@@ -73,7 +77,7 @@ public class ZooServiceImpl implements ZooService{
             newAnimal.getZoos().add(newZooAnimal);
         }
 
-        return newZoo;
+        return zooRepository.save(newZoo);
     }
 
     @Override
@@ -82,7 +86,7 @@ public class ZooServiceImpl implements ZooService{
                 .orElseThrow(() -> new EntityNotFoundException("Could not find zoo with id '" + zoo.getZooid() + "'"));;
 
         // handle simple fields
-        newZoo.setZooname(zoo.getZooname());
+        if(zoo.getZooname() != null) newZoo.setZooname(zoo.getZooname());
 
         // handle phones
         if(zoo.getPhones().size() > 0) {
@@ -110,7 +114,7 @@ public class ZooServiceImpl implements ZooService{
             }
         }
 
-        return newZoo;
+        return zooRepository.save(newZoo);
     }
 
     @Override

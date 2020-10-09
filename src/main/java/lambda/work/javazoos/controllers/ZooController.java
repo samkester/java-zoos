@@ -21,7 +21,7 @@ public class ZooController {
         return new ResponseEntity<>(zooService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/zoo/{id}", produces = {"application/json"}, consumes = {"application/json"})
+    @GetMapping(value = "/zoo/{id}", produces = {"application/json"})
     private ResponseEntity<?> getZoo(@PathVariable long id)
     {
         return new ResponseEntity<>(zooService.getById(id), HttpStatus.OK);
@@ -48,7 +48,7 @@ public class ZooController {
         return new ResponseEntity<>(zooService.patchZoo(zoo), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/zoo/{id}", produces = {"application/json"}, consumes = {"application/json"})
+    @DeleteMapping(value = "/zoo/{id}", produces = {"application/json"})
     private ResponseEntity<?> deleteZoo(@PathVariable long id)
     {
         zooService.deleteZoo(id);
