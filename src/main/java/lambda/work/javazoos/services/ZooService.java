@@ -13,5 +13,5 @@ public interface ZooService {
 
     Zoo patchZoo(Zoo zoo);
 
-    void deleteZoo(Zoo zoo);
+    void deleteZoo(long id);
 }
